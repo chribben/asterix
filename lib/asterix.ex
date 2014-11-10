@@ -7,17 +7,18 @@ defmodule Asterix do
   #   ClientId => string
   #   RequestMessage => MetadataRequest | ProduceRequest | FetchRequest
   #                   | OffsetRequest | OffsetCommitRequest | OffsetFetchRequest
-  defmodule Request do
-    defstruct api_key: nil, api_version: 0, correlation_id: 0,
-    client_id: nil, request_message: nil
-  end
+  @type Request :: {ApiKey, ApiVersion, CorrelationId, ClientId, RequestMessage}
+  @type ApiKey :: Integer
+  @type ApiVersion :: Integer
+  @type CorrelationId :: Integer
+  @type ClientId :: char_list
+  @type RequestMessage :: MetadataRequest | ProduceRequest |
+  FetchRequest | OffsetRequest | OffsetCommitRequest | OffsetFetchRequest
 
   # MetadataRequest => [TopicName]
   #   TopicName => string
-  defmodule MetadataRequest do
-    defstruct topic_names: []
-  end
-
+  @type MetadataRequest :: list(TopicName)
+  @type TopicName :: char_list
 
   # MetadataResponse => [Broker][TopicMetadata]
   #   Broker => NodeId Host Port
@@ -32,21 +33,53 @@ defmodule Asterix do
   #   Leader => int32
   #   Replicas => [int32]
   #   Isr => [int32]
-  defmodule MetadataResponse do
-    defstruct brokers: [], topics_metadata: []
+  @type MetadataResponse :: {list(Broker), list(TopicMetadata)}
+  @type Broker :: {NodeId, Host, Port}
+  @type NodeId :: Integer
+  @type Host :: char_list
+  @type Port :: Integer
+  @type TopicMetadata :: {TopicErrorCode, TopicName, list(PartitionMetadata)}
+  @type PartitionErrorCode :: Integer
+  @type PartitionId :: Integer
+  @type Leader :: Integer
+  @type Replicas :: list(Integer)
+  @type Isr :: list(Integer)
 
-    defmodule Broker do
-      defstruct node_id: nil, host: nil, port: nil
-    end
+  # MessageSet => [Offset MessageSize Message]
+  #   Offset => int64
+  #   MessageSize => int32
+  @type MessageSet :: list({Offset, MessageSize, Message})
+  @type Offset :: Integer
+  @type MessageSize :: Integer
 
-    defmodule TopicMetadata do
-      defstruct topic_error_code: nil, topic_name: nil,
-      partions_metadata: []
-    end
+  # Message => Crc MagicByte Attributes Key Value
+  #   Crc => int32
+  #   MagicByte => int8
+  #   Attributes => int8
+  #   Key => bytes
+  #   Value => bytes
+  @type Message :: {Crc, MagicByte, Attributes, Key, Value}
+  @type Crc :: Integer
+  @type MagicByte :: Integer
+  @type Attributes :: Integer
+  @type Key :: binary
+  @type Value :: binary
 
-    defmodule PartitionMetadata do
-      defstruct partition_error_code: nil, partition_id: nil, leader:
-      nil, replicas: [], isr: []
-    end
-  end
+  # ProduceRequest => RequiredAcks Timeout [TopicName [Partition MessageSetSize MessageSet]]
+  #   RequiredAcks => int16
+  #   Timeout => int32
+  #   Partition => int32
+  #   MessageSetSize => int32
+  @type ProduceRequest :: {RequiredAcks, Timeout,
+                           list({TopicName, list({Partition,
+                                                  MessageSetSize,
+                                                  MessageSet})})}
+  @type RequiredAcks :: Integer
+  @type Timeout :: Integer
+  @type Partition :: Integer
+  @type MessageSetSize :: Integer
+
+
+  # TODO: MOOOAAAR TYPEZZZZZZ
+
 end
