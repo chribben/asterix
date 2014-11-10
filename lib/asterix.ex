@@ -86,6 +86,7 @@ defmodule Asterix do
 
   @spec get_metadata() :: metadata_response
   def get_metadata() do
+    # This intentionally fails the Dialyzer check for now.
     nil
   end
 
