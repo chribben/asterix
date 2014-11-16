@@ -1,5 +1,5 @@
 defmodule Asterix.MetadataRequest do
-  defstruct topics: []
+  defstruct topics: [], api_key: 3
 
   def put_strings(pe, []), do: pe
   def put_strings(pe, [head|tail]) do
