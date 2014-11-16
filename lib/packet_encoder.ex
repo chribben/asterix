@@ -20,6 +20,6 @@ defmodule Asterix.PacketEncoder do
   end
 
   def strings([head|tail]) do
-    Asterix.PacketEncoder.string(head) <> strings(tail)
+    string(head) <> strings(tail)
   end
 end

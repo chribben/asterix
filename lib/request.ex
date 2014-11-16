@@ -5,15 +5,17 @@ defmodule Asterix.Request do
   message: nil
 end
 
-
 defimpl Asterix.Encodeable, for: Asterix.Request do
-  def encode(self) do
-    msg = Asterix.PacketEncoder.int16(self.message.api_key) <>
-      Asterix.PacketEncoder.int16(self.api_version) <>
-      Asterix.PacketEncoder.int32(self.correlation_id) <>
-      Asterix.PacketEncoder.string(self.client_id) <>
-      Asterix.Encodeable.encode(self.message)
+  import Asterix.PacketEncoder
+  alias Asterix.Encodeable
 
-    Asterix.PacketEncoder.int32(byte_size(msg)) <> msg
+  def encode(self) do
+    msg = int16(self.message.api_key) <>
+      int16(self.api_version) <>
+      int32(self.correlation_id) <>
+      string(self.client_id) <>
+      Encodeable.encode(self.message)
+
+    int32(byte_size(msg)) <> msg
   end
 end

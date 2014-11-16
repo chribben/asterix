@@ -3,8 +3,9 @@ defmodule Asterix.MetadataRequest do
 end
 
 defimpl Asterix.Encodeable, for: Asterix.MetadataRequest do
+  import Asterix.PacketEncoder
+
   def encode(self) do
-    Asterix.PacketEncoder.array_length(length(self.topics)) <>
-      Asterix.PacketEncoder.strings self.topics
+    array_length(length(self.topics)) <> strings self.topics
   end
 end

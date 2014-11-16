@@ -1,14 +1,17 @@
 defmodule Asterix do
+  alias Asterix.Request
+  alias Asterix.MetadataRequest
+  alias Asterix.Encodeable
 
   def connect(host, port) do
     :gen_tcp.connect host, port, [:binary, active: false]
   end
 
   def get_metadata(client, topics) do
-    req = %Asterix.Request{
-            message: %Asterix.MetadataRequest{topics: topics}}
+    req = %Request{
+            message: %MetadataRequest{topics: topics}}
 
-    data = Asterix.Encodeable.encode(req)
+    data = Encodeable.encode(req)
 
     :gen_tcp.send(client, data)
     :gen_tcp.recv(client, 0, 2000)
