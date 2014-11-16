@@ -5,10 +5,8 @@ defmodule AsterixTest do
     topics = ["hej", "hopp"]
     req = %Asterix.Request{
             message: %Asterix.MetadataRequest{topics: topics}}
-    pe = %Asterix.PacketEncoder{}
 
-    data = Asterix.PacketEncoder.to_binary(
-      Asterix.Encodeable.encode(req, pe))
+    data = Asterix.Encodeable.encode(req)
 
     expected =
     <<0, 0, 0, 32>> # size

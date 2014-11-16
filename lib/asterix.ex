@@ -7,10 +7,8 @@ defmodule Asterix do
   def get_metadata(client, topics) do
     req = %Asterix.Request{
             message: %Asterix.MetadataRequest{topics: topics}}
-    pe = %Asterix.PacketEncoder{}
 
-    data = Asterix.Encodeable.encode(req, pe)
-    |> Asterix.PacketEncoder.to_binary
+    data = Asterix.Encodeable.encode(req)
 
     :gen_tcp.send(client, data)
     :gen_tcp.recv(client, 0, 2000)
@@ -18,7 +16,7 @@ defmodule Asterix do
 
   def main do
     {:ok, client} = connect :localhost, 9092
-    {:ok, res} = get_metadata client, ["hej", "hopp"]
+    {:ok, res} = get_metadata client, ["test"]
     IO.puts "Response:"
     IO.inspect res
   end
