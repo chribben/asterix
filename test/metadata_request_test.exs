@@ -73,12 +73,17 @@ defmodule AsterixTest do
     data =
     <<0, 0, 0, 8>> <> # response size
     <<0, 0, 0, 1>> <> # broker array length
-    <<>> <> # fake broker data for now
-    <<0, 0, 0, 0>> #topic array length
+    <<0, 0, 0, 1>> <> # node id
+    <<0, 9, "localhost">> <> # "localhost"
+    <<0, 0, 35, 132>> <> # port 9092
+    <<0, 0, 0, 0>> # topic array length
 
     {response, _} = Decodeable.decode %MetadataResponse{}, data
 
-    assert response.brokers == [%BrokerMetadata{}]
+    assert response.brokers == [%BrokerMetadata{
+                                        node_id: 1,
+                                        host: "localhost",
+                                        port: 9092 }]
     assert response.topics == []
   end
 

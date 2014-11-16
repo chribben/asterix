@@ -14,10 +14,10 @@ defimpl Asterix.Decodeable, for: Asterix.MetadataResponse do
   alias Asterix.BrokerMetadata
 
   def decode(self, b) do
-    {size, b} = read_int32(b)
-    {broker_count, b} = read_array_length(b)
+    {_size, b} = decode_int32(b)
+    {broker_count, b} = decode_array_length(b)
 
-    {brokers, b} = read_into_array(
+    {brokers, b} = decode_into_array(
       &(Decodeable.decode %BrokerMetadata{}, &1),
       broker_count,
       b)
