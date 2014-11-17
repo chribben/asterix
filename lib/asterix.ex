@@ -4,6 +4,7 @@ defmodule Asterix do
   alias Asterix.MetadataResponse
   alias Asterix.Encodeable
   alias Asterix.Decodeable
+  alias Asterix.PacketDecoder
 
   @default_timeout 2000
 
@@ -21,7 +22,7 @@ defmodule Asterix do
     # First 4 bytes is the response size
     case :gen_tcp.recv client, 4, @default_timeout do
       {:ok, data} ->
-        size = Integer.parse(data)
+        {size, _} = PacketDecoder.decode_int32(data)
         :gen_tcp.recv client, size, @default_timeout
       e -> e
     end
