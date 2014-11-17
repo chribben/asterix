@@ -6,6 +6,7 @@ defmodule AsterixTest do
   alias Asterix.MetadataRequest
   alias Asterix.MetadataResponse
   alias Asterix.BrokerMetadata
+  alias Asterix.TopicMetadata
 
   def encode_metadata_request_with_topics(topics) do
     req = %Request{
@@ -85,6 +86,24 @@ defmodule AsterixTest do
                                         host: "localhost",
                                         port: 9092 }]
     assert response.topics == []
+  end
+
+  test "MetadataRequest with a single topic decodes correctly" do
+    data =
+    <<0, 0, 0, 8>> <> # response size
+    <<0, 0, 0, 0>> <> # broker array length
+    <<0, 0, 0, 1>> <> # topic array length
+    <<0, 1>> <> # error code
+    <<0, 4, "test">> <> # topic name
+    <<0, 0, 0, 0>> # topic partition array length
+
+      {response, _} = Decodeable.decode %MetadataResponse{}, data
+
+    assert response.topics == [%TopicMetadata{
+                                        error_code: 1,
+                                        name: "test",
+                                        partitions: [] }]
+    assert response.brokers == []
   end
 
 end

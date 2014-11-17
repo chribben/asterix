@@ -20,6 +20,13 @@ defmodule Asterix.PacketDecoder do
   end
 
   @spec decode_into_array((binary -> {t, binary}),
+                          binary) :: {list(t), binary} when t: any
+  def decode_into_array(f, b) do
+    {len, b} = decode_array_length(b)
+    decode_into_array(f, len, b)
+  end
+
+  @spec decode_into_array((binary -> {t, binary}),
                         number,
                         binary) :: {list(t), binary} when t: any
   def decode_into_array(_, 0, b) do
