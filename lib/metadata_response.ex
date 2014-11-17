@@ -15,8 +15,8 @@ defimpl Asterix.Decodeable, for: Asterix.MetadataResponse do
   alias Asterix.TopicMetadata
 
   def decode(self, b) do
-    {_size, b} = decode_int32(b)
-
+    # TODO: Move to common Response struct that contains each
+    # specific response.
     {correlation_id, b} = decode_int32(b)
 
     {brokers, b} = decode_into_array(

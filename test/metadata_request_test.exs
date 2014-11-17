@@ -60,7 +60,6 @@ defmodule AsterixTest do
 
   test "MetadataRequest with no brokers decodes correctly" do
     data =
-    <<0, 0, 0, 8>> <> # response size
     <<0, 0, 0, 1>> <> # correlation id
     <<0, 0, 0, 0>> <> # broker array length
     <<0, 0, 0, 0>> #topic array length
@@ -73,7 +72,6 @@ defmodule AsterixTest do
 
   test "MetadataRequest with a single broker decodes correctly" do
     data =
-    <<0, 0, 0, 8>> <> # response size
     <<0, 0, 0, 1>> <> # correlation id
     <<0, 0, 0, 1>> <> # broker array length
     <<0, 0, 0, 1>> <> # node id
@@ -92,7 +90,6 @@ defmodule AsterixTest do
 
   test "MetadataRequest with a single topic decodes correctly" do
     data =
-    <<0, 0, 0, 8>> <> # response size
     <<0, 0, 0, 1>> <> # correlation id
     <<0, 0, 0, 0>> <> # broker array length
     <<0, 0, 0, 1>> <> # topic array length
