@@ -5,6 +5,7 @@ end
 
 defimpl Asterix.Decodeable, for: Asterix.TopicMetadata do
   import Asterix.PacketDecoder
+  alias Asterix.Decodeable
   alias Asterix.PartitionMetadata
 
   def decode(self, b) do

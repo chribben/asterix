@@ -37,4 +37,8 @@ defmodule Asterix.PacketDecoder do
     {next, next_rest} = decode_into_array(f, count - 1, result_rest)
     {[result | next], next_rest}
   end
+
+  def decode_int32_array(b) do
+    decode_into_array(&decode_int32/1, b)
+  end
 end

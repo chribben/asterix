@@ -1,5 +1,5 @@
 defmodule Asterix.PartitionMetadata do
-  defstruct error_code: 0, id: 0, leader: 0, replicas: [], isr: 0
+  defstruct error_code: 0, id: 0, leader: 0, replicas: [], isr: []
 end
 
 defimpl Asterix.Decodeable, for: Asterix.PartitionMetadata do
@@ -10,13 +10,8 @@ defimpl Asterix.Decodeable, for: Asterix.PartitionMetadata do
     {id, b} = decode_int32(b)
     {leader, b} = decode_int32(b)
 
-    {replicas, b} = decode_into_array(
-      &(decode_int32 &1),
-      b)
-
-    {isr, b} = decode_into_array(
-      &(decode_int32 &1),
-      b)
+    {replicas, b} = decode_int32_array(b)
+    {isr, b} = decode_int32_array(b)
 
     {%{self |
        error_code: error_code,
