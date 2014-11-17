@@ -5,35 +5,66 @@ defmodule Asterix do
   alias Asterix.Encodeable
   alias Asterix.Decodeable
 
+  @default_timeout 2000
+
   def connect(host, port) do
     :gen_tcp.connect host, port, [:binary, active: false]
   end
 
-  def get_response(client) do
+  defp encode_and_send_request(client, struct) do
+    req = %Request{message: struct}
+    data = Encodeable.encode req
+    :gen_tcp.send client, data
+  end
+
+  defp get_response(client) do
     # First 4 bytes is the response size
-    {:ok, size_data} = :gen_tcp.recv(client, 4, 2000)
-    size = Integer.parse(size_data)
-    :gen_tcp.recv(client, size, 2000)
+    case :gen_tcp.recv client, 4, @default_timeout do
+      {:ok, data} ->
+        size = Integer.parse(data)
+        :gen_tcp.recv client, size, @default_timeout
+      e -> e
+    end
+  end
+
+  defp get_response_and_decode(client, struct) do
+    case get_response client do
+      {:ok, data} ->
+        {res, _} = Decodeable.decode struct, data
+        {:ok, res}
+      e -> e
+    end
+  end
+
+  defp send_request_and_get_response(client, req, res) do
+    case encode_and_send_request client, req do
+      :ok -> get_response_and_decode client, res
+      e -> e
+    end
   end
 
   def get_metadata(client, topics) do
-    req = %Request{
-            message: %MetadataRequest{topics: topics}}
-
-    request_data = Encodeable.encode(req)
-
-    :gen_tcp.send(client, request_data)
-    {:ok, response_data} = get_response(client)
-
-    {res, _b} = Decodeable.decode(%MetadataResponse{}, response_data)
-    res
+    req = %MetadataRequest{topics: topics}
+    send_request_and_get_response client, req, %MetadataResponse{}
   end
 
   def main do
-    {:ok, client} = connect :localhost, 9092
-    res = get_metadata client, ["test"]
-    IO.puts "Response:"
-    IO.inspect res
+    main :localhost, 9092
+  end
+
+  def main(host, port) do
+    case connect host, port do
+      {:ok, client} ->
+        case get_metadata client, ["test"] do
+          {:ok, metadata} ->
+            IO.puts "Metadata:"
+            IO.inspect metadata
+          {:error, e} ->
+            IO.puts :stderr, e
+        end
+      {:error, e} ->
+        IO.puts :stderr, "Failed to connect to Kafka: #{e}"
+    end
   end
 
 end
