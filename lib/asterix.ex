@@ -1,5 +1,6 @@
 defmodule Asterix do
   alias Asterix.Request
+  alias Asterix.Response
   alias Asterix.MetadataRequest
   alias Asterix.MetadataResponse
   alias Asterix.Encodeable
@@ -12,8 +13,7 @@ defmodule Asterix do
     :gen_tcp.connect host, port, [:binary, active: false]
   end
 
-  defp encode_and_send_request(client, struct) do
-    req = %Request{message: struct}
+  defp encode_and_send_request(client, req) do
     data = Encodeable.encode req
     :gen_tcp.send client, data
   end
@@ -28,10 +28,10 @@ defmodule Asterix do
     end
   end
 
-  defp get_response_and_decode(client, struct) do
+  defp get_response_and_decode(client, res) do
     case get_response client do
       {:ok, data} ->
-        {res, _} = Decodeable.decode struct, data
+        {res, _} = Decodeable.decode res, data
         {:ok, res}
       e -> e
     end
@@ -45,8 +45,10 @@ defmodule Asterix do
   end
 
   def get_metadata(client, topics) do
-    req = %MetadataRequest{topics: topics}
-    send_request_and_get_response client, req, %MetadataResponse{}
+    req = %Request{message: %MetadataRequest{topics: topics},
+                   correlation_id: 1}
+    res = %Response{message: %MetadataResponse{}}
+    send_request_and_get_response client, req, res
   end
 
   def main do
