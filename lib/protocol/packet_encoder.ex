@@ -1,4 +1,4 @@
-defmodule Asterix.PacketEncoder do
+defmodule Asterix.Protocol.PacketEncoder do
   def int16(n) do
     <<n :: size(16)>>
   end

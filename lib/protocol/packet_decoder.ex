@@ -1,4 +1,4 @@
-defmodule Asterix.PacketDecoder do
+defmodule Asterix.Protocol.PacketDecoder do
   def decode_int16(b) do
     <<n :: size(16), rest :: binary>> = b
     {n, rest}

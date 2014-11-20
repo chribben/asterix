@@ -1,18 +1,18 @@
-defmodule Asterix.MetadataResponse do
+defmodule Asterix.Protocol.MetadataResponse do
   defstruct correlation_id: 0, brokers: [], topics: []
 
-  @type t :: %Asterix.MetadataResponse{
+  @type t :: %Asterix.Protocol.MetadataResponse{
             # TODO: Use correct types here.
             brokers: list(any),
             topics: list(any)
         }
 end
 
-defimpl Asterix.Decodeable, for: Asterix.MetadataResponse do
-  import Asterix.PacketDecoder
-  alias Asterix.Decodeable
-  alias Asterix.BrokerMetadata
-  alias Asterix.TopicMetadata
+defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.MetadataResponse do
+  import Asterix.Protocol.PacketDecoder
+  alias Asterix.Protocol.Decodeable
+  alias Asterix.Protocol.BrokerMetadata
+  alias Asterix.Protocol.TopicMetadata
 
   def decode(self, b) do
     {brokers, b} = decode_into_array(

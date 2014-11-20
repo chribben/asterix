@@ -1,12 +1,12 @@
-defmodule Asterix.TopicMetadata do
+defmodule Asterix.Protocol.TopicMetadata do
   defstruct error_code: 0, name: "", partitions: []
 end
 
 
-defimpl Asterix.Decodeable, for: Asterix.TopicMetadata do
-  import Asterix.PacketDecoder
-  alias Asterix.Decodeable
-  alias Asterix.PartitionMetadata
+defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.TopicMetadata do
+  import Asterix.Protocol.PacketDecoder
+  alias Asterix.Protocol.Decodeable
+  alias Asterix.Protocol.PartitionMetadata
 
   def decode(self, b) do
     {error_code, b} = decode_int16(b)

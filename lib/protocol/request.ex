@@ -1,13 +1,13 @@
-defmodule Asterix.Request do
+defmodule Asterix.Protocol.Request do
   defstruct api_version: 0,
   correlation_id: 0,
   client_id: "asterix",
   message: nil
 end
 
-defimpl Asterix.Encodeable, for: Asterix.Request do
-  import Asterix.PacketEncoder
-  alias Asterix.Encodeable
+defimpl Asterix.Protocol.Encodeable, for: Asterix.Protocol.Request do
+  import Asterix.Protocol.PacketEncoder
+  alias Asterix.Protocol.Encodeable
 
   def encode(self) do
     msg = int16(self.message.api_key) <>

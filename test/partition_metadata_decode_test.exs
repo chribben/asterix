@@ -1,7 +1,7 @@
 defmodule PartitionMetadataDecodeTest do
   use ExUnit.Case
-  alias Asterix.Decodeable
-  alias Asterix.PartitionMetadata
+  alias Asterix.Protocol.Decodeable
+  alias Asterix.Protocol.PartitionMetadata
 
   test "PartitionMetadata with error replica decodes properly" do
     data =

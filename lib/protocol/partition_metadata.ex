@@ -1,9 +1,9 @@
-defmodule Asterix.PartitionMetadata do
+defmodule Asterix.Protocol.PartitionMetadata do
   defstruct error_code: 0, id: 0, leader: 0, replicas: [], isr: []
 end
 
-defimpl Asterix.Decodeable, for: Asterix.PartitionMetadata do
-  import Asterix.PacketDecoder
+defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.PartitionMetadata do
+  import Asterix.Protocol.PacketDecoder
 
   def decode(self, b) do
     {error_code, b} = decode_int16(b)

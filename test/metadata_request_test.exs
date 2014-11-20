@@ -1,12 +1,12 @@
 defmodule AsterixTest do
   use ExUnit.Case
-  alias Asterix.Encodeable
-  alias Asterix.Decodeable
-  alias Asterix.Request
-  alias Asterix.MetadataRequest
-  alias Asterix.MetadataResponse
-  alias Asterix.BrokerMetadata
-  alias Asterix.TopicMetadata
+  alias Asterix.Protocol.Encodeable
+  alias Asterix.Protocol.Decodeable
+  alias Asterix.Protocol.Request
+  alias Asterix.Protocol.MetadataRequest
+  alias Asterix.Protocol.MetadataResponse
+  alias Asterix.Protocol.BrokerMetadata
+  alias Asterix.Protocol.TopicMetadata
 
   def encode_metadata_request_with_topics(topics) do
     req = %Request{

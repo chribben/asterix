@@ -1,4 +1,4 @@
-defmodule Asterix.Types do
+defmodule Asterix.Protocol.Types do
 
   # MetadataResponse => [Broker][TopicMetadata]
   #   Broker => NodeId Host Port

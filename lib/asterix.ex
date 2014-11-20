@@ -1,11 +1,11 @@
 defmodule Asterix do
-  alias Asterix.Request
-  alias Asterix.Response
-  alias Asterix.MetadataRequest
-  alias Asterix.MetadataResponse
-  alias Asterix.Encodeable
-  alias Asterix.Decodeable
-  alias Asterix.PacketDecoder
+  alias Asterix.Protocol.Request
+  alias Asterix.Protocol.Response
+  alias Asterix.Protocol.MetadataRequest
+  alias Asterix.Protocol.MetadataResponse
+  alias Asterix.Protocol.Encodeable
+  alias Asterix.Protocol.Decodeable
+  alias Asterix.Protocol.PacketDecoder
 
   @default_timeout 2000
 

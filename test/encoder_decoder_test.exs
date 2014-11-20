@@ -1,7 +1,7 @@
 defmodule EncoderDecoderTest do
   use ExUnit.Case
-  alias Asterix.PacketEncoder
-  alias Asterix.PacketDecoder
+  alias Asterix.Protocol.PacketEncoder
+  alias Asterix.Protocol.PacketDecoder
 
   test "PacketEncoder encodes an empty string" do
     assert (PacketEncoder.string "") == <<0, 0>>

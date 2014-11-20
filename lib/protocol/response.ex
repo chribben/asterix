@@ -1,15 +1,15 @@
-defmodule Asterix.Response do
+defmodule Asterix.Protocol.Response do
   defstruct correlation_id: 0, message: nil
 
-  @type t :: %Asterix.Response{
+  @type t :: %Asterix.Protocol.Response{
             correlation_id: number,
             message: any
         }
 end
 
-defimpl Asterix.Decodeable, for: Asterix.Response do
-  import Asterix.PacketDecoder
-  alias Asterix.Decodeable
+defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.Response do
+  import Asterix.Protocol.PacketDecoder
+  alias Asterix.Protocol.Decodeable
 
   def decode(self, b) do
     {correlation_id, b} = decode_int32(b)
