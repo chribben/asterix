@@ -6,12 +6,12 @@ defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.PartitionMetadata do
   import Asterix.Protocol.Decoder
 
   def decode(self, b) do
-    {error_code, b} = decode_int16(b)
-    {id, b} = decode_int32(b)
-    {leader, b} = decode_int32(b)
+    {error_code, b} = int16(b)
+    {id, b} = int32(b)
+    {leader, b} = int32(b)
 
-    {replicas, b} = decode_int32_array(b)
-    {isr, b} = decode_int32_array(b)
+    {replicas, b} = int32_array(b)
+    {isr, b} = int32_array(b)
 
     {%{self |
        error_code: error_code,

@@ -22,7 +22,7 @@ defmodule EncoderDecoderTest do
   end
 
   test "Decoder decodes an encoded string" do
-    {s, rest} = Decoder.decode_string(<<0, 3, 104, 101, 106>>)
+    {s, rest} = Decoder.string(<<0, 3, 104, 101, 106>>)
     assert s == "hej"
     assert rest == <<>>
   end
@@ -35,7 +35,7 @@ defmodule EncoderDecoderTest do
     <<0, 0, 0, 3>> <>
     <<0, 0, 0, 4>>
 
-      {numbers, b} = Decoder.decode_int32_array(data)
+      {numbers, b} = Decoder.int32_array(data)
     assert numbers == [1, 2, 3, 4]
     assert b == <<>>
   end

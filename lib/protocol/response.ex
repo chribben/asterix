@@ -12,7 +12,7 @@ defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.Response do
   alias Asterix.Protocol.Decodeable
 
   def decode(self, b) do
-    {correlation_id, b} = decode_int32(b)
+    {correlation_id, b} = int32(b)
     {message, b} = Decodeable.decode(self.message, b)
     {%{self |
        correlation_id: correlation_id,

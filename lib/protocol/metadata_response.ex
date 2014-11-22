@@ -15,11 +15,11 @@ defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.MetadataResponse do
   alias Asterix.Protocol.TopicMetadata
 
   def decode(self, b) do
-    {brokers, b} = decode_into_array(
+    {brokers, b} = into_array(
       &(Decodeable.decode %BrokerMetadata{}, &1),
       b)
 
-    {topics, b} = decode_into_array(
+    {topics, b} = into_array(
       &(Decodeable.decode %TopicMetadata{}, &1),
       b)
 

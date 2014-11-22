@@ -9,10 +9,10 @@ defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.TopicMetadata do
   alias Asterix.Protocol.PartitionMetadata
 
   def decode(self, b) do
-    {error_code, b} = decode_int16(b)
-    {name, b} = decode_string(b)
+    {error_code, b} = int16(b)
+    {name, b} = string(b)
 
-    {partitions, b} = decode_into_array(
+    {partitions, b} = into_array(
       &(Decodeable.decode %PartitionMetadata{}, &1),
       b)
 
