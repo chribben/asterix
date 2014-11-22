@@ -7,6 +7,16 @@ defmodule EncoderDecoderTest do
     assert (PacketEncoder.string "") == <<0, 0>>
   end
 
+
+  test "PacketEncoder encodes an empty array" do
+    assert PacketEncoder.array([], &PacketEncoder.int32/1) == <<0, 0, 0, 0>>
+  end
+
+  test "PacketEncoder encodes array" do
+    data = PacketEncoder.array [1, 2, 3, 4], &PacketEncoder.int16/1
+    assert data == <<0, 0, 0, 4, 0, 1, 0, 2, 0, 3, 0, 4>>
+  end
+
   test "PacketEncoder encodes a non-empty string" do
     assert (PacketEncoder.string "hej") == <<0, 3, 104, 101, 106>>
   end

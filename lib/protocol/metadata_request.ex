@@ -6,6 +6,6 @@ defimpl Asterix.Protocol.Encodeable, for: Asterix.Protocol.MetadataRequest do
   import Asterix.Protocol.PacketEncoder
 
   def encode(self) do
-    array_length(length(self.topics)) <> strings self.topics
+    array self.topics, &string/1
   end
 end
