@@ -1,4 +1,4 @@
-defmodule Asterix.Protocol.PacketEncoder do
+defmodule Asterix.Protocol.Encoder do
   def int16(n) when is_number(n) do
     <<n :: size(16)>>
   end

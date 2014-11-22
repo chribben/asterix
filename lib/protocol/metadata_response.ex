@@ -9,7 +9,7 @@ defmodule Asterix.Protocol.MetadataResponse do
 end
 
 defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.MetadataResponse do
-  import Asterix.Protocol.PacketDecoder
+  import Asterix.Protocol.Decoder
   alias Asterix.Protocol.Decodeable
   alias Asterix.Protocol.BrokerMetadata
   alias Asterix.Protocol.TopicMetadata

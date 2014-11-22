@@ -8,7 +8,7 @@ defmodule Asterix.Protocol.Response do
 end
 
 defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.Response do
-  import Asterix.Protocol.PacketDecoder
+  import Asterix.Protocol.Decoder
   alias Asterix.Protocol.Decodeable
 
   def decode(self, b) do

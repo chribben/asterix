@@ -3,7 +3,7 @@ defmodule Asterix.Protocol.BrokerMetadata do
 end
 
 defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.BrokerMetadata do
-  import Asterix.Protocol.PacketDecoder
+  import Asterix.Protocol.Decoder
 
   def decode(self, b) do
     {node_id, b} = decode_int32(b)

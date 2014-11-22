@@ -3,7 +3,7 @@ defmodule Asterix.Protocol.PartitionMetadata do
 end
 
 defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.PartitionMetadata do
-  import Asterix.Protocol.PacketDecoder
+  import Asterix.Protocol.Decoder
 
   def decode(self, b) do
     {error_code, b} = decode_int16(b)

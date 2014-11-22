@@ -9,7 +9,7 @@ defmodule Asterix.Protocol.ProduceRequest do
 end
 
 defimpl Asterix.Protocol.Encodeable, for: Asterix.Protocol.ProduceRequest do
-  import Asterix.Protocol.PacketEncoder
+  import Asterix.Protocol.Encoder
   alias Asterix.Protocol.Encodeable
 
   def encode(self) do

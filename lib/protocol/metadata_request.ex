@@ -3,7 +3,7 @@ defmodule Asterix.Protocol.MetadataRequest do
 end
 
 defimpl Asterix.Protocol.Encodeable, for: Asterix.Protocol.MetadataRequest do
-  import Asterix.Protocol.PacketEncoder
+  import Asterix.Protocol.Encoder
 
   def encode(self) do
     array self.topics, &string/1

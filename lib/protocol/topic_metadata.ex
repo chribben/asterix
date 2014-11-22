@@ -4,7 +4,7 @@ end
 
 
 defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.TopicMetadata do
-  import Asterix.Protocol.PacketDecoder
+  import Asterix.Protocol.Decoder
   alias Asterix.Protocol.Decodeable
   alias Asterix.Protocol.PartitionMetadata
 
