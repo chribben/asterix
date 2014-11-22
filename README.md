@@ -4,10 +4,12 @@ A work-in-progress Kafka client library written in Elixir.
 
 ## Status
 
-Asterix will start out as a simple client to the Kafka APIs without any further
-features. When it is stable enough it could become a more capable client that
-handles the low level details for you automatically, using the aforementioned
-APIs. The following tasks are just for the initial scope.
+Asterix will start out as a simple client to the
+[Kafka APIs](https://cwiki.apache.org/confluence/display/KAFKA/A+Guide+To+The+Kafka+Protocol)
+without any further features. When it is stable enough it could become a more
+capable client that handles the low level details for you automatically (batching,
+broker tracking, etc), using the aforementioned APIs. These following tasks are
+just for the initial scope.
 
 ### Done
 
