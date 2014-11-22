@@ -36,3 +36,8 @@ Kafka.
 ```bash
 mix test
 ```
+
+## License
+
+Asterix source code is released under the MIT License, see [LICENSE](LICENSE)
+for more information.
