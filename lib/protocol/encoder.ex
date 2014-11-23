@@ -1,4 +1,8 @@
 defmodule Asterix.Protocol.Encoder do
+  def int8(n) when is_number(n) do
+    << n :: size(8)>>
+  end
+
   def int16(n) when is_number(n) do
     <<n :: size(16)>>
   end
@@ -23,9 +27,14 @@ defmodule Asterix.Protocol.Encoder do
     string(head) <> strings(tail)
   end
 
+  def bytes(b) when is_binary(b) do
+    int32(byte_size b) <> <<b :: binary>>
+  end
+
   defp array_length(len) when is_number(len) do
     int32(len)
   end
+
   defp array_length(x) when is_list(x) do
     array_length(length(x))
   end
@@ -33,6 +42,7 @@ defmodule Asterix.Protocol.Encoder do
   defp array_elements([], _) do
     ""
   end
+
   defp array_elements([head|tail], f) do
     f.(head) <> array_elements(tail, f)
   end

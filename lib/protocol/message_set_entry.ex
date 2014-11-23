@@ -1,42 +1,34 @@
-defmodule TopicPartitionTest do
-  use ExUnit.Case
-  alias Asterix.Protocol.Encodeable
-  alias Asterix.Protocol.ProduceRequest.TopicPartition
-  alias Asterix.Protocol.ProduceRequest.PartitionMessageSet
+defmodule Asterix.Protocol.MessageSetEntry do
+  defstruct offset: 0, message: nil
+end
 
-  test "TopicPartition with no partition message sets encodes correctly" do
-    topic_partition = %TopicPartition{
-      topic_name: "test",
-      partition_message_sets: []
-    }
-    data = Encodeable.encode topic_partition
+defimpl Asterix.Protocol.Encodeable, for: Asterix.Protocol.MessageSetEntry do
+  import Asterix.Protocol.Encoder
+    alias Asterix.Protocol.Encodeable
 
-    expected =
-    <<0, 4>> <> "test" # length and data for topic name
-    <> <<0, 0, 0, 0>> # partition message sets array length
+    def encode(self) do
+      msg = Encodeable.encode(self.message)
 
-    assert data == expected
+      int64(self.offset) <>
+      int32(byte_size(msg)) <>
+      msg
+    end
   end
 
-  test "TopicPartition with a partition message set encodes correctly" do
-    empty_set = %PartitionMessageSet{
-      partition: 1,
-      message_set_size: 4, # 4 bytes for the array length
-      message_set: []
-    }
-    topic_partition = %TopicPartition{
-      topic_name: "test",
-      partition_message_sets: [empty_set]
-    }
-    data = Encodeable.encode topic_partition
+  defimpl Asterix.Protocol.Decodeable, for: Asterix.Protocol.MessageSetEntry do
+    import Asterix.Protocol.Decoder
+    alias Asterix.Protocol.Decodeable
 
-    expected =
-    <<0, 4>> <> "test" # length and data for topic name
-    <> <<0, 0, 0, 1>> # partition message sets array length
-    <> <<0, 0, 0, 1>> # partition
-    <> <<0, 0, 0, 4>> # message set byte size
-    <> <<0, 0, 0, 0>> # message set array length
+    def decode(self, b) do
+      { offset, b } = int64(self.offset)
+      { message_size, b } = int32(self.message_size)
+    { message, b } = Decodeable.decode(self.message, b)
+    decoded = %{ self |
+      offset: offset,
+      message_size: message_size,
+      message: message
+    }
 
-    assert data == expected
+    { decoded, b }
   end
 end
