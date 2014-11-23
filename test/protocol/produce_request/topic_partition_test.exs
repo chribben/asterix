@@ -21,7 +21,6 @@ defmodule TopicPartitionTest do
   test "TopicPartition with a partition message set encodes correctly" do
     empty_set = %PartitionMessageSet{
       partition: 1,
-      message_set_size: 4, # 4 bytes for the array length
       message_set: []
     }
     topic_partition = %TopicPartition{

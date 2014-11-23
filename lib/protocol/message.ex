@@ -10,11 +10,17 @@ end
 
 defimpl Asterix.Protocol.Encodeable, for: Asterix.Protocol.Message do
   import Asterix.Protocol.Encoder
+
   def encode(self) do
+    key = case self.key do
+      nil -> <<>>
+      b -> bytes(b)
+    end
+
     int32(self.crc) <>
     int8(self.magic_byte) <>
     int8(self.attributes) <>
-    bytes(self.key) <>
+    key <>
     bytes(self.value)
   end
 end
