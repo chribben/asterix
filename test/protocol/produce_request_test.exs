@@ -10,9 +10,10 @@ defmodule ProduceRequestTest do
   end
 
   test "ProduceRequest with no topic partitions encodes correctly" do
-    req = %ProduceRequest{required_acks: 0,
-                          timeout: 1,
-                          topic_partitions: []}
+    req = %ProduceRequest{
+      required_acks: ProduceRequest.RequiredAcks.no_response,
+      timeout: 1,
+      topic_partitions: []}
     data = encode_produce_request req
 
     expected =
