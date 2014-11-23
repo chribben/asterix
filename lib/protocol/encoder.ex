@@ -7,6 +7,10 @@ defmodule Asterix.Protocol.Encoder do
     <<n :: size(32)>>
   end
 
+  def int64(n) when is_number(n) do
+    <<n :: size(64)>>
+  end
+
   def string(s) do
     int16(byte_size s) <> <<s :: binary>>
   end

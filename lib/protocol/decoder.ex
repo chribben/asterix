@@ -1,12 +1,18 @@
 defmodule Asterix.Protocol.Decoder do
-  def int16(b) do
-    <<n :: size(16), rest :: binary>> = b
+  defp int_with_size(s, b) when is_binary(b) do
+    <<n :: size(s), rest :: binary>> = b
     {n, rest}
+  end
+  def int16(b) do
+    int_with_size(16, b)
   end
 
   def int32(b) do
-    <<n :: size(32), rest :: binary>> = b
-    {n, rest}
+    int_with_size(32, b)
+  end
+
+  def int64(b) do
+    int_with_size(64, b)
   end
 
   def array_length(b) do
