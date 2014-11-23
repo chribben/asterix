@@ -28,4 +28,18 @@ defmodule ProduceRequestTest do
 
     assert data == expected
   end
+
+  test "TopicPartition with no partition message sets encodes correctly" do
+    topic_partition = %ProduceRequest.TopicPartition{
+      topic_name: "test",
+      partition_message_sets: []
+    }
+    data = Encodeable.encode topic_partition
+
+    expected =
+    <<0, 4>> <> "test" # length and data for topic name
+    <> <<0, 0, 0, 0>> # partition message sets array length
+
+    assert data == expected
+  end
 end
