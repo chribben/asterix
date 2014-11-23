@@ -1,4 +1,4 @@
-defmodule AsterixTest do
+defmodule MetadataRequestTest do
   use ExUnit.Case
   alias Asterix.Protocol.Encodeable
   alias Asterix.Protocol.Decodeable
